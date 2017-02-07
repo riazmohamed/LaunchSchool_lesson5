@@ -85,26 +85,45 @@ def detect_winner(brd)
   nil
 end
 
+player_score = 0
+computer_score = 0
 loop do
   board = initialize_board
-
+  
   loop do
+
+    loop do
+      display_board(board)
+
+      player_places_piece!(board)
+      break if someone_won?(board) || board_full?(board)
+
+      computer_places_piece!(board)
+      break if someone_won?(board) || board_full?(board)
+    end
+
     display_board(board)
+    if someone_won?(board)
+      prompt "#{detect_winner(board)} won!"
+      break
+    else
+      prompt "It's a tie!"
+      break
+    end
 
-    player_places_piece!(board)
-    break if someone_won?(board) || board_full?(board)
-
-    computer_places_piece!(board)
-    break if someone_won?(board) || board_full?(board)
+  end
+  if detect_winner(board) == "Player"
+    player_score += 1
+    puts "Player score = #{player_score}, Computer score: #{computer_score}"
+  elsif detect_winner(board) == "Computer"
+    player_score += 1
+    puts "Player score = #{player_score}, Computer score: #{computer_score}"
   end
 
-  display_board(board)
-
-  if someone_won?(board)
-    prompt "#{detect_winner(board)} won!"
-  else
-    prompt "It's a tie!"
-  end
+  if player_score == 5 || computer_score == 5
+    puts "#{detect_winner(board)} won the league"
+    break
+  ends
 
   prompt "Play again? (y or n)"
   answer = gets.chomp
