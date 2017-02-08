@@ -64,8 +64,27 @@ def player_places_piece!(brd)
   brd[square] = PLAYER_MARKER
 end
 
+def find_at_risk_square(line, board)
+  if board.values_at(*line).count(PLAYER_MARKER) == 2
+    board.select{ |k, v| line.include?(k) && v == INITIAL_MARKER }.keys.first
+  elsif board.values_at(*line).count(COMPUTER_MARKER) == 2
+    board.select{ |k, v| line.include?(k) && v == INITIAL_MARKER }.keys.first
+  else
+    nil
+  end
+end
+
 def computer_places_piece!(brd)
-  square = empty_squares(brd).sample
+  square = nil
+  WINNING_LINES.each do |line|
+    square = find_at_risk_square(line, brd)
+    break if square
+  end
+
+  if !square
+    square = empty_squares(brd).sample
+  end
+
   brd[square] = COMPUTER_MARKER
 end
 
@@ -89,7 +108,7 @@ player_score = 0
 computer_score = 0
 loop do
   board = initialize_board
-  
+
   loop do
 
     loop do
@@ -110,8 +129,9 @@ loop do
       prompt "It's a tie!"
       break
     end
-
   end
+
+  # keep score
   if detect_winner(board) == "Player"
     player_score += 1
     puts "Player score = #{player_score}, Computer score: #{computer_score}"
@@ -123,7 +143,7 @@ loop do
   if player_score == 5 || computer_score == 5
     puts "#{detect_winner(board)} won the league"
     break
-  ends
+  end
 
   prompt "Play again? (y or n)"
   answer = gets.chomp
