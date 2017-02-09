@@ -52,6 +52,46 @@ def joinor(arr, seperator = ', ', last_seperator = 'or')
   result
 end
 
+# choose if computer or player should go first
+def first_player(brd)
+  display_board(brd)
+  prompt "Who do you want to go first?"
+  prompt "Choose 1) for Player"
+  prompt "Choose 2) for Computer"
+  choose = ''
+  current_player = ''
+  loop do
+    choose = gets.chomp.to_i
+    if choose == 1
+      current_player = "Player"
+      break
+    elsif choose == 2
+      current_player = "Computer"
+      break
+    else
+      prompt "Invalid Selection! Please select 1 or 2."
+    end
+  end
+  current_player
+end
+
+def places_piece!(current_player, brd)
+  if current_player == "Player"
+    player_places_piece!(brd)
+  else
+    computer_places_piece!(brd)
+  end
+end
+
+def alternate_players(current_player)
+  if current_player == "Player"
+    "Computer"
+  else
+    "Player"
+  end
+end
+
+
 def player_places_piece!(brd)
   square = ''
   loop do
@@ -122,16 +162,14 @@ player_score = 0
 computer_score = 0
 loop do
   board = initialize_board
+  current_player = first_player(board)
 
   loop do
 
     loop do
       display_board(board)
-
-      player_places_piece!(board)
-      break if someone_won?(board) || board_full?(board)
-
-      computer_places_piece!(board)
+      places_piece!(current_player, board)
+      current_player = alternate_players(current_player)
       break if someone_won?(board) || board_full?(board)
     end
 
