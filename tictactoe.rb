@@ -91,7 +91,6 @@ def alternate_players(current_player)
   end
 end
 
-
 def player_places_piece!(brd)
   square = ''
   loop do
@@ -106,7 +105,7 @@ end
 
 def find_at_risk_square(line, board, marker)
   if board.values_at(*line).count(marker) == 2
-    board.select{ |k, v| line.include?(k) && v == INITIAL_MARKER }.keys.first
+    board.select { |k, v| line.include?(k) && v == INITIAL_MARKER }.keys.first
   else
     nil
   end
@@ -121,7 +120,7 @@ def computer_places_piece!(brd)
     break if square
   end
 
-  #defense second
+  # defense second
   if !square
     WINNING_LINES.each do |line|
       square = find_at_risk_square(line, brd, PLAYER_MARKER)
@@ -165,7 +164,6 @@ loop do
   current_player = first_player(board)
 
   loop do
-
     loop do
       display_board(board)
       places_piece!(current_player, board)
@@ -176,23 +174,20 @@ loop do
     display_board(board)
     if someone_won?(board)
       prompt "#{detect_winner(board)} won!"
-      break
     else
       prompt "It's a tie!"
-      break
     end
+    break
   end
 
   # keep score
   if detect_winner(board) == "Player"
     player_score += 1
-    puts "Player score = #{player_score}, Computer score: #{computer_score}"
   elsif detect_winner(board) == "Computer"
     computer_score += 1
-    puts "Player score = #{player_score}, Computer score: #{computer_score}"
-  else
-    puts "Player score = #{player_score}, Computer score: #{computer_score}"
   end
+
+  puts "Player score = #{player_score}, Computer score: #{computer_score}"
 
   if player_score == 5 || computer_score == 5
     puts "#{detect_winner(board)} won the league"
