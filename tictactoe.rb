@@ -75,16 +75,16 @@ end
 def computer_places_piece!(brd)
   square = nil
 
-  #defense first
+  # offense first
   WINNING_LINES.each do |line|
-    square = find_at_risk_square(line, brd, PLAYER_MARKER)
+    square = find_at_risk_square(line, brd, COMPUTER_MARKER)
     break if square
   end
 
-  # offense
+  #defense second
   if !square
     WINNING_LINES.each do |line|
-      square = find_at_risk_square(line, brd, COMPUTER_MARKER)
+      square = find_at_risk_square(line, brd, PLAYER_MARKER)
       break if square
     end
   end
@@ -145,7 +145,7 @@ loop do
     player_score += 1
     puts "Player score = #{player_score}, Computer score: #{computer_score}"
   elsif detect_winner(board) == "Computer"
-    player_score += 1
+    computer_score += 1
     puts "Player score = #{player_score}, Computer score: #{computer_score}"
   end
 
