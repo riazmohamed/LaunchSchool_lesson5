@@ -89,6 +89,11 @@ def computer_places_piece!(brd)
     end
   end
 
+  # Pick square 5 (the center square)
+  if !square && empty_squares(brd).include?(5)
+    square = 5
+  end
+
   # Just pick a square
   if !square
     square = empty_squares(brd).sample
@@ -146,6 +151,8 @@ loop do
     puts "Player score = #{player_score}, Computer score: #{computer_score}"
   elsif detect_winner(board) == "Computer"
     computer_score += 1
+    puts "Player score = #{player_score}, Computer score: #{computer_score}"
+  else
     puts "Player score = #{player_score}, Computer score: #{computer_score}"
   end
 
