@@ -48,7 +48,9 @@ end
 def joinor(arr, seperator = ', ', last_seperator = 'or')
   result = []
   result = arr.first if arr.length == 1
-  result = arr[0..-2].join(seperator) + " #{last_seperator} #{arr.last}" if arr.length > 1
+  if arr.length > 1
+    result = arr[0..-2].join(seperator) + " #{last_seperator} #{arr.last}"
+  end
   result
 end
 
@@ -56,20 +58,20 @@ end
 def first_player(brd)
   display_board(brd)
   prompt "Who do you want to go first?"
-  prompt "Choose 1) for Player"
-  prompt "Choose 2) for Computer"
+  prompt "Choose 'p' for Player"
+  prompt "Choose 'c' for Computer"
   choose = ''
   current_player = ''
   loop do
-    choose = gets.chomp.to_i
-    if choose == 1
+    choose = gets.chomp
+    if choose == 'p'
       current_player = "Player"
       break
-    elsif choose == 2
+    elsif choose == 'c'
       current_player = "Computer"
       break
     else
-      prompt "Invalid Selection! Please select 1 or 2."
+      prompt "Invalid Selection! Please select 'p' or 'c'."
     end
   end
   current_player
@@ -121,11 +123,9 @@ def computer_places_piece!(brd)
   end
 
   # defense second
-  if !square
-    WINNING_LINES.each do |line|
-      square = find_at_risk_square(line, brd, PLAYER_MARKER)
-      break if square
-    end
+  WINNING_LINES.each do |line|
+    square = find_at_risk_square(line, brd, PLAYER_MARKER) unless square
+    break if square
   end
 
   # Pick square 5 (the center square)
@@ -134,9 +134,7 @@ def computer_places_piece!(brd)
   end
 
   # Just pick a square
-  if !square
-    square = empty_squares(brd).sample
-  end
+  square = empty_squares(brd).sample unless square
 
   brd[square] = COMPUTER_MARKER
 end
@@ -164,20 +162,17 @@ loop do
   current_player = first_player(board)
 
   loop do
-    loop do
-      display_board(board)
-      places_piece!(current_player, board)
-      current_player = alternate_players(current_player)
-      break if someone_won?(board) || board_full?(board)
-    end
-
     display_board(board)
-    if someone_won?(board)
-      prompt "#{detect_winner(board)} won!"
-    else
-      prompt "It's a tie!"
-    end
-    break
+    places_piece!(current_player, board)
+    current_player = alternate_players(current_player)
+    break if someone_won?(board) || board_full?(board)
+  end
+
+  display_board(board)
+  if someone_won?(board)
+    prompt "#{detect_winner(board)} won!"
+  else
+    prompt "It's a tie!"
   end
 
   # keep score

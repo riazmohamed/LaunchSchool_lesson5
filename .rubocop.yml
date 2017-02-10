@@ -214,7 +214,7 @@ Metrics/LineLength:
 
 Metrics/MethodLength:
   Description: 'Avoid methods longer than 10 lines of code.'
-  Enabled: true
+  Enabled: false
   CountComments: false  # count full line comments?
   Max: 15
 
