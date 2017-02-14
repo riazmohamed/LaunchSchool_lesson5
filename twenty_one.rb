@@ -76,33 +76,40 @@ def highest_sum(player_cards, dealer_cards)
   end
 end
 
-player_cards = []
-dealer_cards = []
-deal_card(player_cards, deck)
-deal_card(dealer_cards, deck)
-prompt "Player's first card: #{player_cards}"
-prompt "Dealer's first card: #{dealer_cards}"
-
-answer = nil
 loop do
+  player_cards = []
+  dealer_cards = []
   deal_card(player_cards, deck)
   deal_card(dealer_cards, deck)
-  break if busted?(dealer_cards)
-  prompt "You both have picked up a card each"
-  prompt "Player's cards: #{player_cards}"
-  prompt "What would you like to do?"
-  prompt "hit or stay?"
-  answer = gets.chomp
-  break if answer == 'stay' || busted?(player_cards)
-end
+  prompt "Player's first card: #{player_cards}"
+  prompt "Dealer's first card: #{dealer_cards}"
 
-if busted?(player_cards)
-  prompt "Player Busted! Player's total sum: #{total_cards(player_cards)}."
-elsif busted?(dealer_cards)
-  prompt "Dealer Busted! Dealer's total sum: #{total_cards(dealer_cards)}."
-else
-  prompt "You chose to stay!" # if player didn't bust, must have stayed
-  highest_sum(player_cards, dealer_cards)
+  answer = nil
+
+  loop do
+    deal_card(player_cards, deck)
+    deal_card(dealer_cards, deck)
+    break if busted?(dealer_cards)
+    prompt "You both have picked up a card each"
+    prompt "Player's cards: #{player_cards}"
+    prompt "What would you like to do?"
+    prompt "hit or stay?"
+    answer = gets.chomp
+    break if answer == 'stay' || busted?(player_cards)
+  end
+
+  if busted?(player_cards)
+    prompt "Player Busted! Player's total sum: #{total_cards(player_cards)}."
+  elsif busted?(dealer_cards)
+    prompt "Dealer Busted! Dealer's total sum: #{total_cards(dealer_cards)}."
+  else
+    prompt "You chose to stay!" # if player didn't bust, must have stayed
+    highest_sum(player_cards, dealer_cards)
+  end
+
+  prompt "Do you want to play again? (Y / N)"
+  user_input = gets.chomp.downcase
+  break unless user_input.start_with?('y')
 end
 
 p player_cards
