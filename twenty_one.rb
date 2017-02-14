@@ -102,9 +102,13 @@ loop do
   end
 
   if busted?(player_cards)
-    prompt "Player Busted! Player's total sum: #{total_cards(player_cards)}."
+    prompt "Dealer Wins!"
+    prompt "Player Total: #{player_sum}."
+    prompt "Dealer Total: #{dealer_sum}."
   elsif busted?(dealer_cards)
-    prompt "Dealer Busted! Dealer's total sum: #{total_cards(dealer_cards)}."
+    prompt "Player Wins!"
+    prompt "Player Total: #{player_sum}."
+    prompt "Dealer Total: #{dealer_sum}."
   else
     prompt "You chose to stay!" # if player didn't bust, must have stayed
     highest_sum(player_cards, dealer_cards)
