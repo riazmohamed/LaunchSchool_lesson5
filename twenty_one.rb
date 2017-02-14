@@ -42,13 +42,9 @@ def total_cards(cards)
 
   sum = 0
   values.each do |value|
-    if value == 'A'
-      sum += 11
-    elsif value.to_i == 0
-      sum += 10
-    else
-      sum += value.to_i
-    end
+    sum += 11 if value == 'A'
+    sum += 10 if value.to_i == 0
+    sum += value.to_i
   end
 
   # correct for Aces
