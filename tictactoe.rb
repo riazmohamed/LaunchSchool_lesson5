@@ -113,29 +113,26 @@ def find_at_risk_square(line, board, marker)
   end
 end
 
-def computer_places_piece!(brd)
-  square = nil
-
-  # offense first
+def computer_offense(brd)
   WINNING_LINES.each do |line|
     square = find_at_risk_square(line, brd, COMPUTER_MARKER)
     break if square
   end
+end
 
-  # defense second
+def computer_defense(brd)
   WINNING_LINES.each do |line|
-    square = find_at_risk_square(line, brd, PLAYER_MARKER) unless square
+    square = find_at_risk_square(line, brd, PLAYER_MARKER)
     break if square
   end
+end
 
-  # Pick square 5 (the center square)
-  if !square && empty_squares(brd).include?(5)
-    square = 5
-  end
-
-  # Just pick a square
-  square = empty_squares(brd).sample unless square
-
+def computer_places_piece!(brd)
+  square = nil
+  computer_offense(brd) # offense first
+  computer_defense(brd) # defense second
+  square = 5 if !square && empty_squares(brd).include?(5) # Pick square 5 (the center square)
+  square = empty_squares(brd).sample unless square # Just pick a square
   brd[square] = COMPUTER_MARKER
 end
 
