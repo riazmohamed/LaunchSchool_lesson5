@@ -68,14 +68,22 @@ def highest_sum(player_cards, dealer_cards)
   player_sum = total_cards(player_cards)
   dealer_sum = total_cards(dealer_cards)
   if player_sum > dealer_sum
-    prompt "Player Wins, Total: #{player_sum}"
+    prompt "Player Wins!"
+    prompt "Player Total: #{player_sum}."
+    prompt "Dealer Total: #{dealer_sum}."
   elsif dealer_sum > player_sum
-    prompt "Dealer Wins, Total: #{dealer_sum}"
+    prompt "Dealer Wins!"
+    prompt "Player Total: #{player_sum}."
+    prompt "Dealer Total: #{dealer_sum}."
   else
     prompt "It's a tie!"
+    prompt "Player total: #{player_sum}."
+    prompt "Dealer total: #{dealer_sum}."
   end
 end
 
+player_cards = []
+dealer_cards = []
 loop do
   player_cards = []
   dealer_cards = []
@@ -89,13 +97,13 @@ loop do
   loop do
     deal_card(player_cards, deck)
     deal_card(dealer_cards, deck)
-    break if busted?(dealer_cards)
+    break if busted?(dealer_cards) || busted?(player_cards)
     prompt "You both have picked up a card each"
     prompt "Player's cards: #{player_cards}"
     prompt "What would you like to do?"
     prompt "hit or stay?"
     answer = gets.chomp
-    break if answer == 'stay' || busted?(player_cards)
+    break if answer == 'stay'
   end
 
   if busted?(player_cards)
