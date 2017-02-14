@@ -64,6 +64,18 @@ def busted?(cards)
   total_cards(cards) > 21
 end
 
+def highest_sum(player_cards, dealer_cards)
+  player_sum = total_cards(player_cards)
+  dealer_sum = total_cards(dealer_cards)
+  if player_sum > dealer_sum
+    prompt "Player Wins, Total: #{player_sum}"
+  elsif dealer_sum > player_sum
+    prompt "Dealer Wins, Total: #{dealer_sum}"
+  else
+    prompt "It's a tie!"
+  end
+end
+
 player_cards = []
 dealer_cards = []
 deal_card(player_cards, deck)
@@ -75,8 +87,9 @@ answer = nil
 loop do
   deal_card(player_cards, deck)
   deal_card(dealer_cards, deck)
+  break if busted?(dealer_cards)
   prompt "You both have picked up a card each"
-  prompt "Your cards are: #{player_cards}"
+  prompt "Player's cards: #{player_cards}"
   prompt "What would you like to do?"
   prompt "hit or stay?"
   answer = gets.chomp
@@ -84,9 +97,12 @@ loop do
 end
 
 if busted?(player_cards)
-  prompt "Game over! Go home. Your total sum is #{total_cards(player_cards)}."
+  prompt "Player Busted! Player's total sum: #{total_cards(player_cards)}."
+elsif busted?(dealer_cards)
+  prompt "Dealer Busted! Dealer's total sum: #{total_cards(dealer_cards)}."
 else
   prompt "You chose to stay!" # if player didn't bust, must have stayed
+  highest_sum(player_cards, dealer_cards)
 end
 
 p player_cards
