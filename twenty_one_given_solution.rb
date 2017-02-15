@@ -50,7 +50,7 @@ def detect_result(dealer_cards, player_cards)
   elsif dealer_total < player_total
     :player
   elsif dealer_total > player_total
-    :player
+    :dealer
   else
     :tie
   end
@@ -106,7 +106,7 @@ loop do
       prompt "Sorry, must enter 'h' or 's'."
     end
 
-    if player_turn =  'h'
+    if player_turn == 'h'
       player_cards << deck.pop
       prompt "You chose to hit!"
       prompt "Your cards are now: #{player_cards}"
@@ -118,7 +118,7 @@ loop do
 
   if busted?(player_cards)
     display_result(dealer_cards, player_cards)
-    play_again? next : break
+    play_again? ? next : break
   else
     prompt "You stayed at #{total(player_cards)}"
   end
@@ -145,7 +145,7 @@ loop do
   # both player and dealer stays - compare cards!
   puts "==============="
   prompt "Dealer has #{dealer_cards}, for a total of: #{total(dealer_cards)}"
-  prompt "Dealer has #{player_cards}, for a total of: #{total(player_cards)}"
+  prompt "Player has #{player_cards}, for a total of: #{total(player_cards)}"
   puts "==============="
 
   display_result(dealer_cards, player_cards)
