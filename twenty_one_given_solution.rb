@@ -75,6 +75,13 @@ def play_again?
   answer.downcase.start_with?('y')
 end
 
+def compare(dealer_cards, player_cards)
+  puts "==============="
+  prompt "Dealer has #{dealer_cards}, for a total of: #{total(dealer_cards)}"
+  prompt "Player has #{player_cards}, for a total of: #{total(player_cards)}"
+  puts "==============="
+end
+
 loop do
   prompt "Welcome to Twenty-One!"
 
@@ -113,6 +120,7 @@ loop do
   end
 
   if busted?(player_cards)
+    compare(dealer_cards, player_cards)
     display_result(dealer_cards, player_cards)
     play_again? ? next : break
   else
@@ -131,7 +139,7 @@ loop do
   end
 
   if busted?(dealer_cards)
-    prompt "Dealer total is now: #{total(dealer_cards)}"
+    compare(dealer_cards, player_cards)
     display_result(dealer_cards, player_cards)
     play_again? ? next : break
   else
@@ -139,10 +147,7 @@ loop do
   end
 
   # both player and dealer stays - compare cards!
-  puts "==============="
-  prompt "Dealer has #{dealer_cards}, for a total of: #{total(dealer_cards)}"
-  prompt "Player has #{player_cards}, for a total of: #{total(player_cards)}"
-  puts "==============="
+  compare(dealer_cards, player_cards)
 
   display_result(dealer_cards, player_cards)
 
