@@ -100,8 +100,10 @@ loop do
     dealer_cards << deck.pop
   end
 
+  # rubocop:disable Metrics/LineLength
   prompt "Dealer has #{dealer_cards[0]} and ?"
   prompt "You have: #{player_cards[0]} and #{player_cards[1]}, for a #{total(player_cards)}."
+  # rubocop:enable Metrics/LineLength
 
   # player_turn
   loop do
@@ -126,8 +128,8 @@ loop do
   if busted?(player_cards)
     compare(dealer_cards, player_cards)
     display_result(dealer_cards, player_cards)
-
-    if detect_result(dealer_cards, player_cards) == :player_busted || detect_result(dealer_cards, player_cards) == :dealer
+    result = detect_result(dealer_cards, player_cards)
+    if result == :player_busted || result == :dealer
       dealer_score += 1
     end
 
@@ -153,7 +155,8 @@ loop do
     compare(dealer_cards, player_cards)
     display_result(dealer_cards, player_cards)
 
-    if detect_result(dealer_cards, player_cards) == :dealer_busted || detect_result(dealer_cards, player_cards) == :player
+    result = detect_result(dealer_cards, player_cards)
+    if result == :dealer_busted || result == :player
       player_score += 1
     end
 
@@ -168,9 +171,11 @@ loop do
   compare(dealer_cards, player_cards)
 
   display_result(dealer_cards, player_cards)
-  if detect_result(dealer_cards, player_cards) == :player_busted || detect_result(dealer_cards, player_cards) == :dealer
+
+  result = detect_result(dealer_cards, player_cards)
+  if result == :player_busted || result == :dealer
     dealer_score += 1
-  elsif detect_result(dealer_cards, player_cards) == :dealer_busted || detect_result(dealer_cards, player_cards) == :player
+  elsif result == :dealer_busted || result == :player
     player_score += 1
   end
   prompt "Your score: #{player_score}, Dealer score: #{dealer_score}"
