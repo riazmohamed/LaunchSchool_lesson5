@@ -2,8 +2,8 @@
 
 SUITS = ['H', 'D', 'S', 'C']
 VALUES = %w(2 3 4 5 6 7 8 9 10 J Q K A)
-BREAK_POINT = 31
-HIT_POINT = 27
+BREAK_POINT = 21
+HIT_POINT = 17
 
 def prompt(msg)
   puts "=> #{msg}"
