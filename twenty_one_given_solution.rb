@@ -168,12 +168,14 @@ loop do
   display_result(dealer_cards, player_cards)
   if detect_result(dealer_cards, player_cards) == :player_busted || detect_result(dealer_cards, player_cards) == :dealer
     dealer_score += 1
-  elsif detect_result(dealer_cards, player_cards) == :player_busted || detect_result(dealer_cards, player_cards) == :dealer
-    dealer_score += 1
+  elsif detect_result(dealer_cards, player_cards) == :dealer_busted || detect_result(dealer_cards, player_cards) == :player
+    player_score += 1
   end
   prompt "Your score: #{player_score}, Dealer score: #{dealer_score}"
   break if player_score >= 5 || dealer_score >= 5
   break unless play_again?
 end
 
+prompt "Player won the best of 5!" if player_score >= 5
+prompt "Dealer won the best of 5!" if dealer_score >= 5
 prompt "Thank you for playing Twenty One! Good Bye!"
