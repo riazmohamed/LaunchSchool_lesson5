@@ -60,18 +60,20 @@ def busted?(cards)
 end
 
 def highest_sum(player_cards, dealer_cards)
-  if total_cards(player_cards) > total_cards(dealer_cards)
+  player_sum = total_cards(player_cards)
+  dealer_sum = total_cards(dealer_cards)
+  if player_sum > dealer_sum
     prompt "Player Wins!"
-    prompt "Player Total: #{total_cards(player_cards)}."
-    prompt "Dealer Total: #{total_cards(dealer_cards)}."
-  elsif total_cards(dealer_cards) > total_cards(player_cards)
+    prompt "Player Total: #{player_sum}."
+    prompt "Dealer Total: #{dealer_sum}."
+  elsif dealer_sum > player_sum
     prompt "Dealer Wins!"
-    prompt "Player Total: #{total_cards(player_cards)}."
-    prompt "Dealer Total: #{total_cards(dealer_cards)}."
+    prompt "Player Total: #{player_sum}."
+    prompt "Dealer Total: #{dealer_sum}."
   else
     prompt "It's a tie!"
-    prompt "Player total: #{total_cards(player_cards)}."
-    prompt "Dealer total: #{total_cards(dealer_cards)}."
+    prompt "Player total: #{player_sum}."
+    prompt "Dealer total: #{dealer_sum}."
   end
 end
 
