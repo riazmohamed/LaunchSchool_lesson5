@@ -77,8 +77,6 @@ def highest_sum(player_cards, dealer_cards)
   end
 end
 
-player_cards = []
-dealer_cards = []
 loop do
   player_cards = []
   dealer_cards = []
@@ -119,5 +117,4 @@ loop do
   break unless user_input.start_with?('y')
 end
 
-p player_cards
-p dealer_cards
+prompt "Thank you for playing twenty one!. Goodbye!"
