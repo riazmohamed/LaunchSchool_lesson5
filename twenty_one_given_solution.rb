@@ -82,6 +82,8 @@ def compare(dealer_cards, player_cards)
   puts "==============="
 end
 
+player_score = 0
+dealer_score = 0
 loop do
   prompt "Welcome to Twenty-One!"
 
@@ -122,6 +124,13 @@ loop do
   if busted?(player_cards)
     compare(dealer_cards, player_cards)
     display_result(dealer_cards, player_cards)
+
+    if detect_result(dealer_cards, player_cards) == :player_busted || detect_result(dealer_cards, player_cards) == :dealer
+      dealer_score += 1
+    end
+
+    prompt "Your score: #{player_score}, Dealer score: #{dealer_score}"
+    break if dealer_score >= 5
     play_again? ? next : break
   else
     prompt "You stayed at #{total(player_cards)}"
@@ -141,6 +150,13 @@ loop do
   if busted?(dealer_cards)
     compare(dealer_cards, player_cards)
     display_result(dealer_cards, player_cards)
+
+    if detect_result(dealer_cards, player_cards) == :dealer_busted || detect_result(dealer_cards, player_cards) == :player
+      player_score += 1
+    end
+
+    prompt "Your score: #{player_score}, Dealer score: #{dealer_score}"
+    break if player_score >= 5
     play_again? ? next : break
   else
     prompt "Dealer stays at #{total(dealer_cards)}"
@@ -150,7 +166,13 @@ loop do
   compare(dealer_cards, player_cards)
 
   display_result(dealer_cards, player_cards)
-
+  if detect_result(dealer_cards, player_cards) == :player_busted || detect_result(dealer_cards, player_cards) == :dealer
+    dealer_score += 1
+  elsif detect_result(dealer_cards, player_cards) == :player_busted || detect_result(dealer_cards, player_cards) == :dealer
+    dealer_score += 1
+  end
+  prompt "Your score: #{player_score}, Dealer score: #{dealer_score}"
+  break if player_score >= 5 || dealer_score >= 5
   break unless play_again?
 end
 
