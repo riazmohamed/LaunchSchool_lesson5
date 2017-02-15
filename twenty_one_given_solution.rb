@@ -17,13 +17,9 @@ def total(cards)
 
   sum = 0
   values.each do |value|
-    if value == "A"
-      sum += 11
-    elsif value.to_i == 0 # J, Q, K
-      sum += 10
-    else
-      sum += value.to_i
-    end
+    sum += 11 if value == "A"
+    sum += 10 if value.to_i == 0 # J, Q, K
+    sum += value.to_i
   end
 
   # correct for Aces
@@ -123,7 +119,7 @@ loop do
     prompt "You stayed at #{total(player_cards)}"
   end
 
-  #dealer_turn
+  # dealer_turn
   prompt "Dealer turn..."
 
   loop do
