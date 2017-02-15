@@ -29,12 +29,14 @@ deck = [['H', '2'], ['H', '3'], ['H', '4'], ['H', '5'], ['H', '6']] +
        [['S', '7'], ['S', '8'], ['S', '9'], ['S', '10'], ['S', 'J']] +
        [['S', 'Q'], ['S', 'K'], ['S', 'A']]
 
+shuffled_deck = deck.shuffle
+
 def prompt(msg)
   puts "=> #{msg}"
 end
 
 def deal_card(cards, deck)
-  cards << deck.sample
+  cards << deck.pop
 end
 
 def total_cards(cards)
@@ -80,16 +82,16 @@ end
 loop do
   player_cards = []
   dealer_cards = []
-  deal_card(player_cards, deck)
-  deal_card(dealer_cards, deck)
+  deal_card(player_cards, shuffled_deck)
+  deal_card(dealer_cards, shuffled_deck)
   prompt "Player's first card: #{player_cards}"
   prompt "Dealer's first card: #{dealer_cards}"
 
   answer = nil
 
   loop do
-    deal_card(player_cards, deck)
-    deal_card(dealer_cards, deck)
+    deal_card(player_cards, shuffled_deck)
+    deal_card(dealer_cards, shuffled_deck)
     break if busted?(dealer_cards) || busted?(player_cards)
     prompt "You both have picked up a card each"
     prompt "Player's cards: #{player_cards}"
