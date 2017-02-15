@@ -118,3 +118,9 @@ loop do
 end
 
 prompt "Thank you for playing twenty one!. Goodbye!"
+
+# can be improved
+=begin
+  1. add shuffle to the deck and pop them into the player/dealer cards
+  2. this is to avoid any potential duplication of cards
+=end
