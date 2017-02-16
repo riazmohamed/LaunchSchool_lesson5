@@ -9,6 +9,10 @@ def prompt(msg)
   puts "=> #{msg}"
 end
 
+def clear_screen
+  system('clear') || system('cls')
+end
+
 def initialize_deck
   SUITS.product(VALUES).shuffle
 end
@@ -19,7 +23,8 @@ def total(cards)
 
   sum = 0
   values.each do |value|
-    sum += 11 if value == "A"
+    sum += 1 if value == "A" && sum + 11 > BREAK_POINT
+    sum += 11 if value == "A" && sum + 11 < BREAK_POINT
     sum += 10 if value.to_i == 0 # J, Q, K
     sum += value.to_i
   end
@@ -87,6 +92,7 @@ end
 player_score = 0
 dealer_score = 0
 loop do
+  clear_screen
   prompt "Welcome to Twenty-One!"
 
   # initialize vars
@@ -118,6 +124,7 @@ loop do
 
     if player_turn == 'h'
       player_cards << deck.pop
+      clear_screen
       prompt "You chose to hit!"
       prompt "Your cards are now: #{player_cards}"
       prompt "Your total is now: #{total(player_cards)}"
@@ -138,6 +145,7 @@ loop do
     break if dealer_score >= 5
     play_again? ? next : break
   else
+    clear_screen
     prompt "You stayed at #{total(player_cards)}"
   end
 
@@ -153,7 +161,7 @@ loop do
   end
 
   if busted?(dealer_cards)
-    compare(dealer_cards, player_cards)
+    display_hands(dealer_cards, player_cards)
     display_result(dealer_cards, player_cards)
 
     result = detect_result(dealer_cards, player_cards)
@@ -169,7 +177,7 @@ loop do
   end
 
   # both player and dealer stays - compare cards!
-  compare(dealer_cards, player_cards)
+  display_hands(dealer_cards, player_cards)
 
   display_result(dealer_cards, player_cards)
 
