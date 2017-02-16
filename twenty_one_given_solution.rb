@@ -77,7 +77,7 @@ def play_again?
   answer.downcase.start_with?('y')
 end
 
-def compare(dealer_cards, player_cards)
+def display_hands(dealer_cards, player_cards)
   puts "==============="
   prompt "Dealer has #{dealer_cards}, for a total of: #{total(dealer_cards)}"
   prompt "Player has #{player_cards}, for a total of: #{total(player_cards)}"
@@ -100,10 +100,11 @@ loop do
     dealer_cards << deck.pop
   end
 
-  # rubocop:disable Metrics/LineLength
+  card_a = player_cards[0]
+  card_b = player_cards[1]
+  total_cards = total(player_cards)
   prompt "Dealer has #{dealer_cards[0]} and ?"
-  prompt "You have: #{player_cards[0]} and #{player_cards[1]}, for a #{total(player_cards)}."
-  # rubocop:enable Metrics/LineLength
+  prompt "You have: #{card_a} and #{card_b}, for a #{total_cards}."
 
   # player_turn
   loop do
@@ -126,7 +127,7 @@ loop do
   end
 
   if busted?(player_cards)
-    compare(dealer_cards, player_cards)
+    display_hands(dealer_cards, player_cards)
     display_result(dealer_cards, player_cards)
     result = detect_result(dealer_cards, player_cards)
     if result == :player_busted || result == :dealer
