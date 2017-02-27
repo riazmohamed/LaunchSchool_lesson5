@@ -85,12 +85,15 @@ def places_piece!(current_player, brd)
   end
 end
 
-def alternate_players(current_player)
-  if current_player == "Player"
+def alternate_player(crnt_player)
+  answer = case crnt_player
+  when "Player"
     "Computer"
-  else
+  when "Computer"
     "Player"
   end
+
+  answer
 end
 
 def player_places_piece!(brd)
@@ -161,7 +164,7 @@ loop do
   loop do
     display_board(board)
     places_piece!(current_player, board)
-    current_player = alternate_players(current_player)
+    current_player = alternate_player(current_player)
     break if someone_won?(board) || board_full?(board)
   end
 
